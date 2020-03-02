@@ -1,21 +1,63 @@
-= ok
+= YAMLPy Guide
+João Pinto <lamego.pinto@gmail.com>
 
-[source, yaml]
-brand: red
-name: "$color$"
+== Introduction
+An YAMLPy document is a valid YAML document extended with dynamic elements, in order to transform the document into a final YAML, YAMLPy documents must be rendered using the  `yampy` utility.
+
+CAUTION: YAMLPy document rendering is equivalent to a python script execution. You should not bindly render documents obtained from untrusted sources.
+
+== Python Dynamic Elements
+Strings found between consecutive `($)` «dollar signs» are considered as a dynamic elements, their content is evaluated in a python runtime, the result of the evalution replaces the dynamic string.
+
+=== Constant Expressions
+Constant expressions can be used to preserve calculation formulas in the source and only the result in the output.
 
 [cols="1a,1a", options="header"]
-.Applications
+.Constant expression examples
 |===
-|Name
-|Category
+|YAMLPy
+|Rendered YAML
 
 |
 [source, yaml]
-color: red
-name: "$color$"
-| ok
+Arithmetic: $2 + 1$
+Strings: $'abc'.upper()$
+List: $[x.upper() for x in "a", "b"]$
 |
+[source, yaml]
+Arithmetic: 3
+Strings: ABC
+List: [ "A", "B"]
+|
+|===
 
+=== Sibling References
 
+In order to facilitate string composition and transformation all sibling keys in a map are available to the python sandbox as variables matching their key names.
 
+[cols="1a,1a", options="header"]
+.Sibling reference examples
+|===
+|YAMLPy
+|Rendered YAML
+
+|
+[source, yaml]
+release: "18.04"
+update: ".4"
+url: http://releases.ubuntu.com/$release$/ubuntu-$release$update$-desktop-amd64.iso
+|
+[source, yaml]
+release: "18.04"
+update: ".4"
+url: http://releases.ubuntu.com/18.04/ubuntu-18.04.4-desktop-amd64.iso
+
+|
+[source, yaml]
+original_color: BlUe.
+normal_color: $original_color.lower().strip(".")$
+|
+[source, yaml]
+original_color: BlUe.
+normal_color: blue
+|===

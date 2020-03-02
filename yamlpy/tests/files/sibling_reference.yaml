@@ -1,7 +1,8 @@
 input:
-  _name: App
-  _version: 0.1
-  title: $_name$ $_version$
-
+  release: "18.04"
+  update: ".4"
+  url: http://releases.ubuntu.com/$release$/ubuntu-$release$$update$-desktop-amd64.iso
 result:
-  title: App 0.1
+  release: "18.04"
+  update: ".4"
+  url: http://releases.ubuntu.com/18.04/ubuntu-18.04.4-desktop-amd64.iso
