@@ -1,0 +1,21 @@
+= ok
+
+[source, yaml]
+brand: red
+name: "$color$"
+
+[cols="1a,1a", options="header"]
+.Applications
+|===
+|Name
+|Category
+
+|
+[source, yaml]
+color: red
+name: "$color$"
+| ok
+|
+
+
+

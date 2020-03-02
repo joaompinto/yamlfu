@@ -1,0 +1,5 @@
+input: The price is 10\$
+
+__result: The price is 10$
+
+result: $__result$

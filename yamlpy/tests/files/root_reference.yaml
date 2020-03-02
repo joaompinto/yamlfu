@@ -1,0 +1,9 @@
+input:
+  name: Zoo
+  child:
+      name: Kanguru from $_.input.name$
+
+result:
+  name: Zoo
+  child:
+      name: Kanguru from Zoo

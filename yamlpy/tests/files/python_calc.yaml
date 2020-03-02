@@ -1,0 +1,11 @@
+input:
+  product: Bananas
+  quantity: 10
+  price: 20
+  total: $quantity * price$
+
+result:
+  product: Bananas
+  quantity: 10
+  price: 20
+  total: 200

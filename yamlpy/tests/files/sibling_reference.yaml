@@ -1,0 +1,7 @@
+input:
+  _name: App
+  _version: 0.1
+  title: $_name$ $_version$
+
+result:
+  title: App 0.1

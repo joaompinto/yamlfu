@@ -1,0 +1,13 @@
+input:
+  _fruits:
+    - orange
+    - banana
+    - pineapple
+  sentence: $[f"I like {f}" for f in _fruits]$
+
+result:
+  sentence:
+    - I like orange
+    - I like banana
+    - I like pineapple
+
