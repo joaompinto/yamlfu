@@ -1,11 +1,11 @@
-=== Silent Nodes
+=== Internal Nodes
 
 Silent nodes can be referenced from other nodes but they are not included in the output. They can be useful for storing data that needs to be referenced multiple times or for intermediate transformations.
 
 A node is treated as "silent" when it's key name starts wih an `(_)` underscore symbol.
 
 [cols="1a,1a", options="header"]
-.Silent node example
+.Internal node example
 |===
 |YAMLPy
 |Rendered YAML
