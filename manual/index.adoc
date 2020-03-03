@@ -1,5 +1,7 @@
 = YAMLPy Guide
 João Pinto <lamego.pinto@gmail.com>
+file-$_config.platform$-$_config.arch$.tar.gz
+
 
 == Introduction
 An YAMLPy document is a valid YAML document extended with dynamic elements, in order to transform the document into a final YAML, YAMLPy documents must be rendered using the  `yampy` utility.
@@ -33,7 +35,7 @@ List: [ "A", "B"]
 
 === Sibling References
 
-In order to facilitate string composition and transformation all sibling keys in a map are available to the python sandbox as variables matching their key names.
+Sibling references can be used to facilitate string composition and transformation, all sibling keys in a map are available to the python execution as variables matching their key names.
 
 [cols="1a,1a", options="header"]
 .Sibling reference examples
@@ -61,3 +63,5 @@ normal_color: $original_color.lower().strip(".")$
 original_color: BlUe.
 normal_color: blue
 |===
+
+include::silent_nodes.adoc[]

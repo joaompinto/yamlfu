@@ -1,0 +1,29 @@
+=== Silent Nodes
+
+Silent nodes can be referenced from other nodes on the document, but they are not be included in the output. They can be usefull to store data that needs to be referenced multiple times
+
+A node is treated as "silent" when it's key name starts wih an `(_)` underscore symbol.
+
+[cols="1a,1a", options="header"]
+.Silent node example
+|===
+|YAMLPy
+|Rendered YAML
+
+|
+[source, yaml]
+----
+_config:
+    os: Linux
+    arch: amd64
+
+System: $_config.os$
+URL: file-$_config.os.lower()$-$_config.arch$.tar.gz
+----
+|
+[source, yaml]
+----
+System: Linux
+URL: file-linux-amd64.tar.gz
+----
+|===
