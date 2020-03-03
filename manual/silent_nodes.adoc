@@ -1,6 +1,6 @@
 === Silent Nodes
 
-Silent nodes can be referenced from other nodes, but they are not included in the output. They can be usefull to store data that needs to be referenced multiple times.
+Silent nodes can be referenced from other nodes but they are not included in the output. They can be useful for storing data that needs to be referenced multiple times or for intermediate transformations.
 
 A node is treated as "silent" when it's key name starts wih an `(_)` underscore symbol.
 
