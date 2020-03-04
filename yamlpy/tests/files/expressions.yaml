@@ -1,8 +1,3 @@
-input:
-    Arithmetic: $2 + 1$
-    Strings: $'abc'.upper()$
-    List: $[x.upper() for x in ["a", "b"]]$
-result:
-    Arithmetic: 3
-    Strings: ABC
-    List: [ "A", "B"]
+Arithmetic: $2 + 1$
+Strings: $'abc'.upper()$
+List: $[x.upper() for x in ["a", "b"]]$

@@ -1,3 +1,4 @@
+import yaml
 from pathlib import Path
 from yamlpy import Loader
 
@@ -6,8 +7,7 @@ def collect_test_files():
     test_files = Path(__file__).parent.joinpath("files").glob("*.yaml")
     return test_files
 
-
-test_files_list = collect_test_files()
+test_files_list = [x for x in collect_test_files() if 'result.yaml' not in x.name]
 
 
 def pytest_generate_tests(metafunc):
@@ -27,6 +27,8 @@ class TestFile(object):
     def test_file(self, test_filename):
         loader = Loader(open(test_filename).read())
         data = loader.resolve()
+        base_path = str(Path(test_filename)).split(".")[0]
+        result_path = Path(base_path + "_result.yaml")
+        expected_data = yaml.load(open(result_path).read(), yaml.FullLoader)
         # Support both result and __result for raw check
-        result = data.get("__result", None) or data["result"]
-        assert(data["input"] == result)
+        assert(data == expected_data)

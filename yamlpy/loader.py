@@ -21,7 +21,7 @@ class Loader:
                 return
             template = Template(yaml_data)
             try:
-                if key_name.isnumeric():    # Handle list indees
+                if key_name.isnumeric():     # Handle list indexes
                     key_name = int(key_name)
                 yaml_parent[key_name] = template.render({})
             except NameError:
@@ -40,8 +40,15 @@ class Loader:
                 self._scan_for_strings(value, sub_yaml_path, yaml_data)
         return
 
+    def _resolve_str(self):
+        """ resolving a single string input """
+        template = Template(self.origin_yaml)
+        return template.render({})
+
     def resolve(self):
         """ resolve $dynamic elements$ in  strings """
+        if isinstance(self.origin_yaml, str):
+            return self._resolve_str()
         # First we scan all strings and consider them "unresolved"
         self._scan_for_strings(self.origin_yaml, [], None)
 
@@ -50,9 +57,10 @@ class Loader:
 
             # Generate top item symbols to be associated with "_"
             top_item = self.origin_yaml
+            top_symbols_map = {}
+
             # Only reference resolved symbols
             top_symbols = [k for k in top_item if k not in self.unresolved_strings]
-            top_symbols_map = {}
             for symbol in top_symbols:
                 top_symbols_map[symbol] = top_item[symbol]
 
@@ -101,7 +109,7 @@ class Loader:
             print("Unable to resolve the following items:", file=stderr)
             for path, value in self.unresolved_strings.items():
                 string_path = path.replace("\n", ".")
-                print(f"{string_path} : {value}", file=stderr)
+                print(f"{string_path} : {value.template}", file=stderr)
             exit(2)
 
         # Delete all dict fields with leading "_"

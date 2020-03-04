@@ -1,7 +1,6 @@
 = YAMLPy Guide
 João Pinto <lamego.pinto@gmail.com>
-:source-highlighter: highlightjs
-
+:source-highlighter: prettify
 
 == Introduction
 An YAMLPy document is a valid YAML document extended with dynamic elements, in order to transform the document into a final YAML, YAMLPy documents must be rendered using the  `yampy` utility.
@@ -14,20 +13,18 @@ Strings found between consecutive `($)` «dollar signs» are considered as a dyn
 === Constant Expressions
 Constant expressions can be used to preserve calculation formulas in the source and only the result in the output.
 
-[cols="a,a", options="header"]
+[cols="1a,1a", options="header"]
 .Constant expression examples
 |===
-|YAMLPy|Rendered YAML
+|YAMLPy
+|Rendered YAML
+
 |
-[source, bash]
-Arithmetic: $2 + 1$
-Strings: $'abc'.upper()$
-List: $[x.upper() for x in "a", "b"]$
+[source, yaml]
+include::../yamlpy/tests/files/expressions.yaml[]
 |
-[source, bash]
-Arithmetic: 3
-Strings: ABC
-List: [ "A", "B"]
+[source, yaml]
+include::../yamlpy/tests/files/expressions_result.yaml[]
 |===
 
 === Sibling References

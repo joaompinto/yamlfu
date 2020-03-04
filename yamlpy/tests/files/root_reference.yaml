@@ -1,9 +1,4 @@
-input:
-  name: Zoo
+animal:
+  location: Zoo
   child:
-      name: Kanguru from $_.input.name$
-
-result:
-  name: Zoo
-  child:
-      name: Kanguru from Zoo
+      name: Kanguru from $_.animal.location$
