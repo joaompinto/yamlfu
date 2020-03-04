@@ -493,14 +493,14 @@ YAMLPy document rendering is equivalent to a python script execution. You should
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">Arithmetic: $2 + 1$
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">Arithmetic: $2 + 1$
 Strings: $'abc'.upper()$
 List: $[x.upper() for x in "a", "b"]$</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">Arithmetic: 3
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">Arithmetic: 3
 Strings: ABC
 List: [ "A", "B"]</code></pre>
 </div>
@@ -530,14 +530,14 @@ List: [ "A", "B"]</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">release: "18.04"
+<pre class="highlightjs highlight"><code data-lang="yaml" class="language-yaml hljs">release: "18.04"
 update: ".4"
 url: http://releases.ubuntu.com/$release$/ubuntu-$release$update$-desktop-amd64.iso</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">release: "18.04"
+<pre class="highlightjs highlight"><code data-lang="yaml" class="language-yaml hljs">release: "18.04"
 update: ".4"
 url: http://releases.ubuntu.com/18.04/ubuntu-18.04.4-desktop-amd64.iso</code></pre>
 </div>
@@ -546,13 +546,13 @@ url: http://releases.ubuntu.com/18.04/ubuntu-18.04.4-desktop-amd64.iso</code></p
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">original_color: BlUe.
+<pre class="highlightjs highlight"><code data-lang="yaml" class="language-yaml hljs">original_color: BlUe.
 normal_color: $original_color.lower().strip(".")$</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">original_color: BlUe.
+<pre class="highlightjs highlight"><code data-lang="yaml" class="language-yaml hljs">original_color: BlUe.
 normal_color: blue</code></pre>
 </div>
 </div></div></td>
@@ -584,7 +584,7 @@ normal_color: blue</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">_config:
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">_config:
     os: Linux
     arch: amd64
 
@@ -594,7 +594,7 @@ URL: file-$_config.os.lower()$-$_config.arch$.tar.gz</code></pre>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">System: Linux
+<pre class="highlightjs highlight"><code data-lang="yaml" class="language-yaml hljs">System: Linux
 URL: file-linux-amd64.tar.gz</code></pre>
 </div>
 </div></div></td>
@@ -607,10 +607,11 @@ URL: file-linux-amd64.tar.gz</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-04 10:37:53 +0100
+Last updated 2020-03-04 10:55:01 +0100
 </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

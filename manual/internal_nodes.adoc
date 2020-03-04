@@ -7,11 +7,8 @@ A node is treated as "silent" when it's key name starts wih an `(_)` underscore 
 [cols="1a,1a", options="header"]
 .Internal node example
 |===
-|YAMLPy
-|Rendered YAML
-
-|
-[source, yaml]
+|YAMLPy|Rendered YAML|
+[source, bash]
 ----
 _config:
     os: Linux

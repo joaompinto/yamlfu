@@ -1,6 +1,6 @@
 = YAMLPy Guide
 João Pinto <lamego.pinto@gmail.com>
-file-$_config.platform$-$_config.arch$.tar.gz
+:source-highlighter: highlightjs
 
 
 == Introduction
@@ -14,23 +14,20 @@ Strings found between consecutive `($)` «dollar signs» are considered as a dyn
 === Constant Expressions
 Constant expressions can be used to preserve calculation formulas in the source and only the result in the output.
 
-[cols="1a,1a", options="header"]
+[cols="a,a", options="header"]
 .Constant expression examples
 |===
-|YAMLPy
-|Rendered YAML
-
+|YAMLPy|Rendered YAML
 |
-[source, yaml]
+[source, bash]
 Arithmetic: $2 + 1$
 Strings: $'abc'.upper()$
 List: $[x.upper() for x in "a", "b"]$
 |
-[source, yaml]
+[source, bash]
 Arithmetic: 3
 Strings: ABC
 List: [ "A", "B"]
-|
 |===
 
 === Sibling References
@@ -64,4 +61,4 @@ original_color: BlUe.
 normal_color: blue
 |===
 
-include::silent_nodes.adoc[]
+include::internal_nodes.adoc[]
