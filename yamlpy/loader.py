@@ -14,14 +14,15 @@ class Loader:
 
     def _scan_for_strings(self, yaml_data, yaml_path, yaml_parent):
         """ scan yaml_data for unresolved dynamic string values """
-        if isinstance(yaml_data, str):
+        if yaml_path:
             key_name = yaml_path[-1]
-            # __ is for raws values, keep it untouched
+            # if is a template node it will not be rendered now
             if key_name.startswith("__"):
                 return
+        if isinstance(yaml_data, str):
             template = Template(yaml_data)
             try:
-                if key_name.isnumeric():     # Handle list indexes
+                if key_name.isnumeric():  # Handle list indexes
                     key_name = int(key_name)
                 yaml_parent[key_name] = template.render({})
             except NameError:
@@ -49,7 +50,8 @@ class Loader:
         """ resolve $dynamic elements$ in  strings """
         if isinstance(self.origin_yaml, str):
             return self._resolve_str()
-        # First we scan all strings and consider them "unresolved"
+
+        # Scan all strings and consider them "unresolved"
         self._scan_for_strings(self.origin_yaml, [], None)
 
         # Loop attempting to resolve all unresolved_strings
@@ -69,7 +71,7 @@ class Loader:
             for yaml_path, yaml_value in self.unresolved_strings.items():
                 available_symbols = {"_": top_symbols_map}
                 parent_item, yaml_key = self._element_at_path(yaml_path)
-                parent_path = '.'.join(yaml_path.split("\n")[:-1])
+                parent_path = ".".join(yaml_path.split("\n")[:-1])
                 if not isinstance(parent_item, dict):
                     continue
                 for slibing_key in parent_item.keys():
@@ -87,7 +89,7 @@ class Loader:
                     rendered_value = yaml_value.render(available_symbols)
                 except NameError:
                     print("UNRESOLVED: ", parent_path + "." + yaml_key, yaml_value)
-                    print("SYOMBOLS", available_symbols)
+                    print("SYMBOLS", available_symbols)
                     pass
                 else:
                     # Set the value at the path

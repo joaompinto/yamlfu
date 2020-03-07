@@ -1,0 +1,4 @@
+animal:
+  location: Zoo
+  child:
+    name: Kanguru from Zoo
