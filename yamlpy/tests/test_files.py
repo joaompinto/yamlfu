@@ -30,6 +30,13 @@ class TestFile(object):
         data = loader.resolve()
         base_path = str(Path(test_filename)).split(".")[0]
         result_path = Path(base_path + "_result.yaml")
-        expected_data = yaml.load(open(result_path).read(), yaml.FullLoader)
-        # Support both result and __result for raw check
-        assert data == expected_data
+        if isinstance(data, str):
+            expected_data = yaml.safe_load(open(result_path).read())
+            assert data == expected_data
+        elif len(data) == 1:
+            expected_data = yaml.safe_load(open(result_path).read())
+            assert data[0] == expected_data
+        else:
+            expected_data = yaml.safe_load_all(open(result_path).read())
+            for i, value in enumerate(expected_data):
+                assert data[i] == value

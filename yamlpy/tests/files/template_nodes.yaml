@@ -1,0 +1,20 @@
+# Leading double underscore to mark it as template node
+__traefik_crd:
+  _arguments: kind   # Arguments required for rendering
+  apiVersion: apiextensions.k8s.io/v1beta1
+  kind: CustomResourceDefinition
+  metadata:
+    name: $kind.lower()$s.traefik.containo.us
+
+  spec:
+    group: traefik.containo.us
+    version: v1alpha1
+    names:
+      kind: $kind$
+      plural: $kind.lower()$s
+      singular: $kind.lower()$
+    scope: Namespaced
+
+# Rendering from an internal node will override the node definition entirely.
+_render_ig_crd: $render(__traefik_crd, "IngressRoute")$
+

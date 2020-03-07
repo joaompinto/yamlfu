@@ -4,6 +4,7 @@ from pathlib import Path
 from optparse import OptionParser
 from . import Loader
 from .pretty import pretty_print_yaml
+from pprint import pprint
 
 
 def parse_cmd_line():
@@ -20,8 +21,11 @@ def main():
     filename = Path(args[0])
     loader = Loader(filename)
     result = loader.resolve()
-    output_yaml = yaml.dump(result)
-    if sys.stdout.isatty():
-        pretty_print_yaml(output_yaml)
-    else:
-        print(output_yaml)
+    for result_item in result:
+        if len(result) > 1:
+            print("---")
+        output_yaml = yaml.safe_dump(result_item)
+        if sys.stdout.isatty():
+            pretty_print_yaml(output_yaml)
+        else:
+            print(output_yaml)

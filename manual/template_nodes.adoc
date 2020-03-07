@@ -1,0 +1,22 @@
+=== Template Nodes
+
+Templated nodes can be used to render nodes that need to be reproduced multiple with custom variables. Template nodes must be dictionaries, and they must have an `_arguments` field with a (csv) string representing the fields required to render a template instance.
+
+In order to render a template, the special _render()_ function is available within the python runtime. It must be invoked with the template name as the first argument, followed by the template arguments.
+
+The next example illustrates the generation of multiple documents using a list for the `kind` argument.
+
+[cols="1a,1a", options="header"]
+.Template node example
+|===
+|YAMLPy|YAML|
+[source, yaml]
+....
+include::../yamlpy/tests/files/template_nodes_list.yaml[]
+....
+|
+[source, yaml]
+....
+include::../yamlpy/tests/files/template_nodes_list_result.yaml[]
+....
+|===
