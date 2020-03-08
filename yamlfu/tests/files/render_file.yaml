@@ -1,5 +1,3 @@
-# Leading double underscore to mark it as template node
-
 _config: $render("_config.yaml")$
 
 test_1:

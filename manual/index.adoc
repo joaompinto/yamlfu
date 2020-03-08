@@ -58,4 +58,4 @@ include::template_nodes.adoc[]
 include::template_nodes.adoc[]
 
 include::render_files.adoc[]
-|===
+
