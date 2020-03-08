@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
 <meta name="author" content="João Pinto">
-<title>YAML Fu Guide</title>
+<title>yamlfu Guide</title>
 <style>
 @import url(http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.0/css/font-awesome.css);
 /* normalize.css v2.1.1 | MIT License | git.io/normalize */
@@ -646,7 +646,7 @@ p.tableblock.header { color: #6d6e71; }
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>YAML Fu Guide</h1>
+<h1>yamlfu Guide</h1>
 <div class="details">
 <span id="author" class="author">João Pinto</span><br>
 <span id="email" class="email"><a href="mailto:lamego.pinto@gmail.com">lamego.pinto@gmail.com</a></span><br>
@@ -655,12 +655,14 @@ p.tableblock.header { color: #6d6e71; }
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a></li>
-<li><a href="#_python_dynamic_elements">Python Dynamic Elements</a>
+<li><a href="#_dynamic_elements_using_python">Dynamic Elements Using Python</a>
 <ul class="sectlevel2">
 <li><a href="#_constant_expressions">Constant Expressions</a></li>
 <li><a href="#_sibling_references">Sibling References</a></li>
 <li><a href="#_internal_nodes">Internal Nodes</a></li>
 <li><a href="#_template_nodes">Template Nodes</a></li>
+<li><a href="#_template_nodes_2">Template Nodes</a></li>
+<li><a href="#_include_other_yaml_files">Include other YAML files</a></li>
 </ul>
 </li>
 </ul>
@@ -671,7 +673,10 @@ p.tableblock.header { color: #6d6e71; }
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An yamlfu document is a valid YAML document extended with dynamic elements, in order to transform the document into a final YAML, yamlfu documents must be rendered using the  <code>yamlfu</code> utility.</p>
+<p><em>YAMLFu</em> is an YAML templating language that allows to embed dynamic elements, using regular Pyhon expressions and <em>YAMLFu</em> specific functions.</p>
+</div>
+<div class="paragraph">
+<p>The <code>yamlfu</code> command line utility processes <em>YAMLFu</em> documents and generates regular YAML.</p>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -680,7 +685,7 @@ p.tableblock.header { color: #6d6e71; }
 <div class="title">Caution</div>
 </td>
 <td class="content">
-yamlfu document rendering is equivalent to a python script execution. You should not bindly render documents obtained from untrusted sources.
+yamlfu document rendering is equivalent to a python script execution. You should not render documents obtained from untrusted sources.
 </td>
 </tr>
 </table>
@@ -688,10 +693,10 @@ yamlfu document rendering is equivalent to a python script execution. You should
 </div>
 </div>
 <div class="sect1">
-<h2 id="_python_dynamic_elements">Python Dynamic Elements</h2>
+<h2 id="_dynamic_elements_using_python">Dynamic Elements Using Python</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Strings found between consecutive <code>($)</code> «dollar signs» are considered dynamic elements, their content is evaluated in a python runtime, the result of the evalution replaces the dynamic string.</p>
+<p>Strings found between consecutive <code>($)</code> «dollar signs» will be processed as dynamic elements, their content is evaluated in a python runtime, the result of that evalution replaces the dynamic string.</p>
 </div>
 <div class="sect2">
 <h3 id="_constant_expressions">Constant Expressions</h3>
@@ -706,7 +711,7 @@ yamlfu document rendering is equivalent to a python script execution. You should
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">yamlfu</th>
+<th class="tableblock halign-left valign-top">YAMLFu</th>
 <th class="tableblock halign-left valign-top">YAML</th>
 </tr>
 </thead>
@@ -743,8 +748,8 @@ List: [ "A", "B"]</code></pre>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">yamlfu</th>
-<th class="tableblock halign-left valign-top">Rendered YAML</th>
+<th class="tableblock halign-left valign-top">YAMLFu</th>
+<th class="tableblock halign-left valign-top">YAML</th>
 </tr>
 </thead>
 <tbody>
@@ -753,28 +758,14 @@ List: [ "A", "B"]</code></pre>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="yaml">release: "18.04"
 update: ".4"
-url: http://releases.ubuntu.com/$release$/ubuntu-$release$update$-desktop-amd64.iso</code></pre>
+url: http://releases.ubuntu.com/$release$/ubuntu-$release$$update$-desktop-amd64.iso</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">release: "18.04"
-update: ".4"
-url: http://releases.ubuntu.com/18.04/ubuntu-18.04.4-desktop-amd64.iso</code></pre>
-</div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">original_color: BlUe.
-normal_color: $original_color.lower().strip(".")$</code></pre>
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">original_color: BlUe.
-normal_color: blue</code></pre>
+<pre class="prettyprint highlight"><code data-lang="yaml">  release: "18.04"
+  update: ".4"
+  url: http://releases.ubuntu.com/18.04/ubuntu-18.04.4-desktop-amd64.iso</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -842,7 +833,7 @@ URL: file-linux-amd64.tar.gz</code></pre>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">yamlfu</th>
+<th class="tableblock halign-left valign-top">YAMLFu</th>
 <th class="tableblock halign-left valign-top">YAML</th>
 </tr>
 </thead>
@@ -934,12 +925,173 @@ spec:
 </tbody>
 </table>
 </div>
+<div class="sect2">
+<h3 id="_template_nodes_2">Template Nodes</h3>
+<div class="paragraph">
+<p>Templated nodes can be used to render nodes that need to be reproduced multiple with custom variables. Template nodes must be dictionaries, and they must have an <code>_arguments</code> field with a (csv) string representing the fields required to render a template instance.</p>
+</div>
+<div class="paragraph">
+<p>In order to render a template, the special <em>render()</em> function is available within the python runtime. It must be invoked with the template name as the first argument, followed by the template arguments.</p>
+</div>
+<div class="paragraph">
+<p>The next example illustrates the generation of multiple documents using a list for the <code>kind</code> argument.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Template node example</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">YAMLFu</th>
+<th class="tableblock halign-left valign-top">YAML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml"># Leading double underscore to mark it as template node
+__traefik_crd:
+  _arguments: kind   # Arguments required for rendering
+  apiVersion: apiextensions.k8s.io/v1beta1
+  kind: CustomResourceDefinition
+  metadata:
+    name: $kind.lower()$s.traefik.containo.us
+
+  spec:
+    group: traefik.containo.us
+    version: v1alpha1
+    names:
+      kind: $kind$
+      plural: $kind.lower()$s
+      singular: $kind.lower()$
+    scope: Namespaced
+
+_kinds: [ IngressRoute, IngressRouteTCP, Middleware, TLSOption ]
+_render_all_crds: $[render(__traefik_crd, k) for k in _kinds]$</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: ingressroutes.traefik.containo.us
+spec:
+  group: traefik.containo.us
+  names:
+    kind: IngressRoute
+    plural: ingressroutes
+    singular: ingressroute
+  scope: Namespaced
+  version: v1alpha1
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: ingressroutetcps.traefik.containo.us
+spec:
+  group: traefik.containo.us
+  names:
+    kind: IngressRouteTCP
+    plural: ingressroutetcps
+    singular: ingressroutetcp
+  scope: Namespaced
+  version: v1alpha1
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: middlewares.traefik.containo.us
+spec:
+  group: traefik.containo.us
+  names:
+    kind: Middleware
+    plural: middlewares
+    singular: middleware
+  scope: Namespaced
+  version: v1alpha1
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: tlsoptions.traefik.containo.us
+spec:
+  group: traefik.containo.us
+  names:
+    kind: TLSOption
+    plural: tlsoptions
+    singular: tlsoption
+  scope: Namespaced
+  version: v1alpha1</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_include_other_yaml_files">Include other YAML files</h3>
+<div class="paragraph">
+<p>The ability to include additional YAML files to compose a single document is useful for managing large projects, it can also be used to store configuration data that needs to be shared accross several YAML documents.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Sibling reference examples</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">YAMLFu</th>
+<th class="tableblock halign-left valign-top">YAML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml"># Leading double underscore to mark it as template node
+
+_config: $render("_config.yaml")$
+
+test_1:
+  method: GET
+  url: $_._config.base$/$_._config.urls.a$
+
+test_2:
+  method: GET
+  url: $_._config.base$/$_._config.urls.b$</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">test_1:
+  method: GET
+  url: http://localhost:9080/insert
+test_2:
+  method: GET
+  url: http://localhost:9080/update</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+</table>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-08 19:15:31 +0100
+Last updated 2020-03-08 21:50:43 +0100
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

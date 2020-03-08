@@ -6,6 +6,12 @@ The ability to include additional YAML files to compose a single document is use
 .Sibling reference examples
 |===
 |YAMLFu|YAML|
+._config.yaml
+[source, yaml]
+....
+include::../yamlfu/tests/files/_config.yaml[]
+....
+.render_file.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/render_file.yaml[]
