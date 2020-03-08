@@ -1,4 +1,4 @@
-= yamlfu Guide
+= YAMLFu Guide
 João Pinto <lamego.pinto@gmail.com>
 :toc: left
 :source-highlighter: prettify
