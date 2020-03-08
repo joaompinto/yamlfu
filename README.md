@@ -1,19 +1,19 @@
-# YAMLPy
+# YAML Fu
 
-YAML extended with Python expressions
+YAML Fu is a YAML templating tool
 
 ## About
 
-This package provides a command line utility and a Python library that generate YAML content fom processing YAMLPy documents.
+This package provides a command line utility and a Python library that generate YAML content fom processing yamlfu documents.
 
 
 ## Install
 
 ```bash
-pip3 install --user yamlpy
+pip3 install --user yamlfu
 ```
 
 ## How to use (command ine tool)
 ```bash
-yamlpy input.yaml
+yamlfu input.yaml
 ```

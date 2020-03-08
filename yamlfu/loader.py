@@ -2,7 +2,7 @@ import yaml
 from dinterpol import Template
 from sys import stderr
 from pathlib import Path
-from .functions import provide_yamlpy_functions
+from .functions import provide_yamlfu_functions
 from pprint import pprint
 
 
@@ -80,7 +80,7 @@ class Loader:
                 if slibing_key_path in self.unresolved_strings:
                     continue
                 available_symbols[slibing_key] = parent_item[slibing_key]
-        provide_yamlpy_functions(available_symbols)
+        provide_yamlfu_functions(available_symbols)
         return available_symbols
 
     def resolve(self, base_symbols={}):

@@ -3,12 +3,12 @@ import yaml
 from pprint import pprint
 
 
-def provide_yamlpy_functions(symbols):
+def provide_yamlfu_functions(symbols):
     symbols["render"] = render
 
 
 def render(template, *args, **kwargs):
-    from yamlpy.loader import Loader
+    from yamlfu.loader import Loader
     loader = Loader(deepcopy(template))
     _arguments = template["_arguments"]
     template_args = _arguments.split()

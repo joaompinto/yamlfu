@@ -1,6 +1,6 @@
 import yaml
 from pathlib import Path
-from yamlpy import Loader
+from yamlfu import Loader
 
 
 def collect_test_files():

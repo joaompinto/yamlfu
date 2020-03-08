@@ -1,13 +1,13 @@
-= YAMLPy Guide
+= YAML Fu Guide
 João Pinto <lamego.pinto@gmail.com>
 :toc: left
 :source-highlighter: prettify
 :stylesheet: css/adoc-colony.css
 
 == Introduction
-An YAMLPy document is a valid YAML document extended with dynamic elements, in order to transform the document into a final YAML, YAMLPy documents must be rendered using the  `yamlpy` utility.
+An yamlfu document is a valid YAML document extended with dynamic elements, in order to transform the document into a final YAML, yamlfu documents must be rendered using the  `yamlfu` utility.
 
-CAUTION: YAMLPy document rendering is equivalent to a python script execution. You should not bindly render documents obtained from untrusted sources.
+CAUTION: yamlfu document rendering is equivalent to a python script execution. You should not bindly render documents obtained from untrusted sources.
 
 == Python Dynamic Elements
 Strings found between consecutive `($)` «dollar signs» are considered dynamic elements, their content is evaluated in a python runtime, the result of the evalution replaces the dynamic string.
@@ -18,12 +18,12 @@ Constant expressions can be used to preserve calculation formulas in the source 
 [cols="1a,1a", options="header"]
 .Constant expression examples
 |===
-|YAMLPy|YAML|
+|yamlfu|YAML|
 [source, yaml]
-include::../yamlpy/tests/files/expressions.yaml[]
+include::../yamlfu/tests/files/expressions.yaml[]
 |
 [source, yaml]
-include::../yamlpy/tests/files/expressions_result.yaml[]
+include::../yamlfu/tests/files/expressions_result.yaml[]
 |===
 
 === Sibling References
@@ -33,7 +33,7 @@ Sibling references can be used to facilitate string composition and transformati
 [cols="1a,1a", options="header"]
 .Sibling reference examples
 |===
-|YAMLPy
+|yamlfu
 |Rendered YAML
 
 |

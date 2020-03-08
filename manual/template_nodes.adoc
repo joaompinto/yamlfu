@@ -9,14 +9,14 @@ The next example illustrates the generation of multiple documents using a list f
 [cols="1a,1a", options="header"]
 .Template node example
 |===
-|YAMLPy|YAML|
+|yamlfu|YAML|
 [source, yaml]
 ....
-include::../yamlpy/tests/files/template_nodes_list.yaml[]
+include::../yamlfu/tests/files/template_nodes_list.yaml[]
 ....
 |
 [source, yaml]
 ....
-include::../yamlpy/tests/files/template_nodes_list_result.yaml[]
+include::../yamlfu/tests/files/template_nodes_list_result.yaml[]
 ....
 |===
