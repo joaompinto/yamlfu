@@ -661,7 +661,6 @@ p.tableblock.header { color: #6d6e71; }
 <li><a href="#_sibling_references">Sibling References</a></li>
 <li><a href="#_internal_nodes">Internal Nodes</a></li>
 <li><a href="#_template_nodes">Template Nodes</a></li>
-<li><a href="#_template_nodes_2">Template Nodes</a></li>
 <li><a href="#_include_other_yaml_files">Include other YAML files</a></li>
 </ul>
 </li>
@@ -926,123 +925,12 @@ spec:
 </table>
 </div>
 <div class="sect2">
-<h3 id="_template_nodes_2">Template Nodes</h3>
-<div class="paragraph">
-<p>Templated nodes can be used to render nodes that need to be reproduced multiple with custom variables. Template nodes must be dictionaries, and they must have an <code>_arguments</code> field with a (csv) string representing the fields required to render a template instance.</p>
-</div>
-<div class="paragraph">
-<p>In order to render a template, the special <em>render()</em> function is available within the python runtime. It must be invoked with the template name as the first argument, followed by the template arguments.</p>
-</div>
-<div class="paragraph">
-<p>The next example illustrates the generation of multiple documents using a list for the <code>kind</code> argument.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Template node example</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">YAMLFu</th>
-<th class="tableblock halign-left valign-top">YAML</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml"># Leading double underscore to mark it as template node
-__traefik_crd:
-  _arguments: kind   # Arguments required for rendering
-  apiVersion: apiextensions.k8s.io/v1beta1
-  kind: CustomResourceDefinition
-  metadata:
-    name: $kind.lower()$s.traefik.containo.us
-
-  spec:
-    group: traefik.containo.us
-    version: v1alpha1
-    names:
-      kind: $kind$
-      plural: $kind.lower()$s
-      singular: $kind.lower()$
-    scope: Namespaced
-
-_kinds: [ IngressRoute, IngressRouteTCP, Middleware, TLSOption ]
-_render_all_crds: $[render(__traefik_crd, k) for k in _kinds]$</code></pre>
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">---
-apiVersion: apiextensions.k8s.io/v1beta1
-kind: CustomResourceDefinition
-metadata:
-  name: ingressroutes.traefik.containo.us
-spec:
-  group: traefik.containo.us
-  names:
-    kind: IngressRoute
-    plural: ingressroutes
-    singular: ingressroute
-  scope: Namespaced
-  version: v1alpha1
-
----
-apiVersion: apiextensions.k8s.io/v1beta1
-kind: CustomResourceDefinition
-metadata:
-  name: ingressroutetcps.traefik.containo.us
-spec:
-  group: traefik.containo.us
-  names:
-    kind: IngressRouteTCP
-    plural: ingressroutetcps
-    singular: ingressroutetcp
-  scope: Namespaced
-  version: v1alpha1
-
----
-apiVersion: apiextensions.k8s.io/v1beta1
-kind: CustomResourceDefinition
-metadata:
-  name: middlewares.traefik.containo.us
-spec:
-  group: traefik.containo.us
-  names:
-    kind: Middleware
-    plural: middlewares
-    singular: middleware
-  scope: Namespaced
-  version: v1alpha1
-
----
-apiVersion: apiextensions.k8s.io/v1beta1
-kind: CustomResourceDefinition
-metadata:
-  name: tlsoptions.traefik.containo.us
-spec:
-  group: traefik.containo.us
-  names:
-    kind: TLSOption
-    plural: tlsoptions
-    singular: tlsoption
-  scope: Namespaced
-  version: v1alpha1</code></pre>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
 <h3 id="_include_other_yaml_files">Include other YAML files</h3>
 <div class="paragraph">
 <p>The ability to include additional YAML files to compose a single document is useful for managing large projects, it can also be used to store configuration data that needs to be shared accross several YAML documents.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Sibling reference examples</caption>
+<caption class="title">Table 5. Sibling reference examples</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1097,7 +985,7 @@ test_2:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-08 21:59:27 +0100
+Last updated 2020-03-08 22:00:07 +0100
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
