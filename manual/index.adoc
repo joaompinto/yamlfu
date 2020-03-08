@@ -59,7 +59,4 @@ normal_color: blue
 
 include::internal_nodes.adoc[]
 
-
-=== Template Nodes
-
 include::template_nodes.adoc[]
