@@ -9,7 +9,7 @@ The next example illustrates the generation of multiple documents using a list f
 [cols="1a,1a", options="header"]
 .Template node example
 |===
-|yamlfu|YAML|
+|YAMLFu|YAML|
 [source, yaml]
 ....
 include::../yamlfu/tests/files/template_nodes_list.yaml[]

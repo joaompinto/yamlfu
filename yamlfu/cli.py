@@ -4,7 +4,6 @@ from pathlib import Path
 from optparse import OptionParser
 from . import Loader
 from .pretty import pretty_print_yaml
-from pprint import pprint
 
 
 def parse_cmd_line():

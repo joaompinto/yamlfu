@@ -9,6 +9,7 @@ def collect_test_files():
 
 
 test_files_list = [x for x in collect_test_files() if "result.yaml" not in x.name]
+test_files_list = [x for x in test_files_list if x.name[0] != "_"]
 
 
 def pytest_generate_tests(metafunc):
@@ -26,7 +27,7 @@ class TestFile(object):
     test_files = test_files_list
 
     def test_file(self, test_filename):
-        loader = Loader(open(test_filename).read())
+        loader = Loader(test_filename)
         data = loader.resolve()
         base_path = str(Path(test_filename)).split(".")[0]
         result_path = Path(base_path + "_result.yaml")

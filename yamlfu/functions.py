@@ -1,15 +1,23 @@
 from copy import deepcopy
-import yaml
-from pprint import pprint
+from functools import partial
 
 
-def provide_yamlfu_functions(symbols):
-    symbols["render"] = render
+def provide_yamlfu_functions(symbols, doc_path):
+    symbols["render"] = partial(render, doc_path)
 
 
-def render(template, *args, **kwargs):
+def render(doc_path, template, *args, **kwargs):
     from yamlfu.loader import Loader
+
     loader = Loader(deepcopy(template))
+
+    if isinstance(template, str):
+        from .loader import Loader
+
+        load_filename = doc_path.joinpath(template)
+        loader = Loader(load_filename)
+        return loader.resolve()[0]
+
     _arguments = template["_arguments"]
     template_args = _arguments.split()
     assert len(template_args) == len(args)

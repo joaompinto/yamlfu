@@ -1,0 +1,18 @@
+=== Include other YAML files
+
+The ability to include additional YAML files to compose a single document is useful for managing large projects, it can also be used to store configuration data that needs to be shared accross several YAML documents.
+
+[cols="a,a", options="header"]
+.Sibling reference examples
+|===
+|YAMLFu|YAML|
+[source, yaml]
+....
+include::../yamlfu/tests/files/render_file.yaml[]
+....
+|
+[source, yaml]
+....
+include::../yamlfu/tests/files/render_file_result.yaml[]
+....
+|===

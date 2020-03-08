@@ -3,18 +3,18 @@ from dinterpol import Template
 from sys import stderr
 from pathlib import Path
 from .functions import provide_yamlfu_functions
-from pprint import pprint
 
 
 class Loader:
-
-    def __init__(self, input_data):
+    def __init__(self, input_data, doc_path=None):
         self.unresolved_strings = {}
         self.multi_doc = []
+        self.doc_path = doc_path
         if isinstance(input_data, dict):  # Loading a template
             self.origin_yaml = input_data
             return
         if isinstance(input_data, Path):
+            self.doc_path = input_data.parent
             with open(input_data) as yaml_file:
                 input_data = yaml_file.read()
         self.origin_yaml = yaml.safe_load(input_data)
@@ -80,7 +80,7 @@ class Loader:
                 if slibing_key_path in self.unresolved_strings:
                     continue
                 available_symbols[slibing_key] = parent_item[slibing_key]
-        provide_yamlfu_functions(available_symbols)
+        provide_yamlfu_functions(available_symbols, self.doc_path)
         return available_symbols
 
     def resolve(self, base_symbols={}):
@@ -99,13 +99,13 @@ class Loader:
             for yaml_path, yaml_value in self.unresolved_strings.items():
 
                 parent_item, yaml_key = self._element_at_path(yaml_path)
-                parent_path = ".".join(yaml_path.split("\n")[:-1])
+                #  parent_path = ".".join(yaml_path.split("\n")[:-1])
                 available_symbols = self.generate_symbols(base_symbols, yaml_path)
                 try:
                     rendered_value = yaml_value.render(available_symbols)
-                except NameError:
-                    print("UNRESOLVED: ", parent_path + "." + yaml_key, yaml_value)
-                    # print("SYMBOLS", available_symbols)
+                except (KeyError, NameError):
+                    #  print("UNRESOLVED: ", parent_path + "." + yaml_key, yaml_value)
+                    #  print("SYMBOLS", available_symbols)
                     pass
                 else:
                     # Merge rendered content when  using an internal key name
@@ -143,6 +143,18 @@ class Loader:
             if resolved_count == 0:
                 break
 
+        self._check_unresolved_strings()
+
+        # Delete all dict fields with leading "_"
+        self._delete_internal(self.origin_yaml)
+
+        # pprint(self.multi_doc)
+        if self.multi_doc:
+            return self.multi_doc
+        else:
+            return [self.origin_yaml]
+
+    def _check_unresolved_strings(self):
         # Finished resolution with unresolved values
         if self.unresolved_strings:
             print("Unable to resolve the following items:", file=stderr)
@@ -150,16 +162,6 @@ class Loader:
                 string_path = path.replace("\n", ".")
                 print(f"{string_path} : {value.template}", file=stderr)
             exit(2)
-
-        # Delete all dict fields with leading "_"
-        self._delete_internal(self.origin_yaml)
-
-        #pprint(self.multi_doc)
-        if self.multi_doc:
-            return self.multi_doc
-        else:
-            return [self.origin_yaml]
-        return result
 
     def _delete_internal(self, yaml_data):
         """ Delete all keys with a leading '_' """
