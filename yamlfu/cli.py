@@ -8,6 +8,13 @@ from .pretty import pretty_print_yaml
 
 def parse_cmd_line():
     parser = OptionParser()
+    parser.add_option(
+        "-x",
+        "--extra-file",
+        dest="extra_file",
+        help="read extra file with yaml values",
+        metavar="FILE",
+    )
     options, args = parser.parse_args()
     if len(args) < 1:
         print("Usage: {} file.yaml".format(sys.argv[0]))
@@ -18,7 +25,7 @@ def parse_cmd_line():
 def main():
     options, args = parse_cmd_line()
     filename = Path(args[0])
-    loader = Loader(filename)
+    loader = Loader(filename, extra_file=options.extra_file)
     result = loader.resolve()
     for result_item in result:
         if len(result) > 1:

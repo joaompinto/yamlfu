@@ -18,6 +18,11 @@ class Loader:
             with open(input_data) as yaml_file:
                 input_data = yaml_file.read()
         self.origin_yaml = yaml.safe_load(input_data)
+        self.extra_yaml = {}
+        if extra_file:
+            with open(extra_file) as yaml_file:
+                input_data = yaml_file.read()
+            self.extra_yaml =  yaml.safe_load(input_data)
 
     def _scan_for_strings(self, yaml_data, yaml_path, yaml_parent):
         """ scan yaml_data for unresolved dynamic string values """
@@ -69,7 +74,9 @@ class Loader:
         top_symbols = [k for k in top_item if k not in self.unresolved_strings]
         for symbol in top_symbols:
             top_symbols_map[symbol] = top_item[symbol]
+
         available_symbols = {"_": top_symbols_map}
+        available_symbols.update(self.extra_yaml)
 
         if isinstance(parent_item, dict):
             for slibing_key in parent_item.keys():
