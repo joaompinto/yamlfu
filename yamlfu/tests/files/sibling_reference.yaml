@@ -1,3 +1,3 @@
 release: "18.04"
 update: ".4"
-url: http://releases.ubuntu.com/$release$/ubuntu-$release$$update$-desktop-amd64.iso
+url: 'http://releases.ubuntu.com/{release}/ubuntu-{release}{update}-desktop-amd64.iso'

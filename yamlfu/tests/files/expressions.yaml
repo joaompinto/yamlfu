@@ -1,3 +1,3 @@
-Arithmetic: $2 + 1$
-Strings: $'abc'.upper()$
-List: $[x.upper() for x in ["a", "b"]]$
+Arithmetic: '{2 + 1}'
+Strings: '{"abc".upper()}'
+List: '{[x.upper() for x in ["a", "b"]]}'

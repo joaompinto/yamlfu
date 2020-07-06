@@ -1,4 +1,4 @@
 animal:
   location: Zoo
   child:
-      name: Kanguru from $_.animal.location$
+      name: Kanguru from {_.animal.location}

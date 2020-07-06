@@ -1,4 +1,5 @@
 from setuptools import setup
+import versioneer
 import sys
 import os
 import io
@@ -21,6 +22,7 @@ def setup_package():
         requirements = f.read()
 
     setup(
+        version=versioneer.get_version(),
         long_description=readme,
         long_description_content_type="text/markdown",
         install_requires=[x for x in requirements.splitlines() if x],

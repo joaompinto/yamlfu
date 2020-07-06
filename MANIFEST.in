@@ -1,3 +1,5 @@
 include README.md
 include LICENSE
 include requirements.txt
+include versioneer.py
+include yamlfu/_version.py

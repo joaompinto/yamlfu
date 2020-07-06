@@ -1,4 +1,4 @@
 product: Bananas
 quantity: 10
 price: 20
-total: $quantity * price$
+total: '{quantity * price}'

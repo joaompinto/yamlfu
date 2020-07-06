@@ -41,8 +41,8 @@ def get_config():
     cfg.VCS = "git"
     cfg.style = "pep440"
     cfg.tag_prefix = ""
-    cfg.parentdir_prefix = "pypaskel-"
-    cfg.versionfile_source = "pypaskel/_version.py"
+    cfg.parentdir_prefix = "yamlfu-"
+    cfg.versionfile_source = "yamlfu/_version.py"
     cfg.verbose = False
     return cfg
 
