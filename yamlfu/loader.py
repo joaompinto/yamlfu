@@ -6,7 +6,7 @@ from .functions import provide_yamlfu_functions
 
 
 class Loader:
-    def __init__(self, input_data, doc_path=None):
+    def __init__(self, input_data, doc_path=None, extra_file=None):
         self.unresolved_strings = {}
         self.multi_doc = []
         self.doc_path = doc_path
@@ -36,11 +36,12 @@ class Loader:
                 string_path = "\n".join(yaml_path)
                 self.unresolved_strings[string_path] = template
 
-        # Recursively check dics
+        # Recursively check dict
         if isinstance(yaml_data, dict):
             for key, value in yaml_data.items():
                 sub_yaml_path = yaml_path + [key]
                 self._scan_for_strings(value, sub_yaml_path, yaml_data)
+
         # Recursively check dict
         if isinstance(yaml_data, list):
             for key, value in enumerate(yaml_data):
