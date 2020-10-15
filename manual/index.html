@@ -695,7 +695,7 @@ yamlfu document rendering is equivalent to a python script execution. You should
 <h2 id="_dynamic_elements_using_python">Dynamic Elements Using Python</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Strings found between consecutive <code>($)</code> «dollar signs» will be processed as dynamic elements, their content is evaluated in a python runtime, the result of that evalution replaces the dynamic string.</p>
+<p>Strings contained within  <code>{}</code> «curly brackets» will be processed as dynamic elements, their content is evaluated in a python runtime, the result of that evalution replaces the dynamic string.</p>
 </div>
 <div class="sect2">
 <h3 id="_constant_expressions">Constant Expressions</h3>
@@ -718,9 +718,9 @@ yamlfu document rendering is equivalent to a python script execution. You should
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">Arithmetic: $2 + 1$
-Strings: $'abc'.upper()$
-List: $[x.upper() for x in ["a", "b"]]$</code></pre>
+<pre class="prettyprint highlight"><code data-lang="yaml">Arithmetic: '{2 + 1}'
+Strings: '{"abc".upper()}'
+List: '{[x.upper() for x in ["a", "b"]]}'</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
@@ -757,7 +757,7 @@ List: [ "A", "B"]</code></pre>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="yaml">release: "18.04"
 update: ".4"
-url: http://releases.ubuntu.com/$release$/ubuntu-$release$$update$-desktop-amd64.iso</code></pre>
+url: 'http://releases.ubuntu.com/{release}/ubuntu-{release}{update}-desktop-amd64.iso'</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
@@ -846,19 +846,19 @@ __traefik_crd:
   apiVersion: apiextensions.k8s.io/v1beta1
   kind: CustomResourceDefinition
   metadata:
-    name: $kind.lower()$s.traefik.containo.us
+    name: '{kind.lower()}s.traefik.containo.us'
 
   spec:
     group: traefik.containo.us
     version: v1alpha1
     names:
-      kind: $kind$
-      plural: $kind.lower()$s
-      singular: $kind.lower()$
+      kind: '{kind}'
+      plural: '{kind.lower()}s'
+      singular: '{kind.lower()}'
     scope: Namespaced
 
 _kinds: [ IngressRoute, IngressRouteTCP, Middleware, TLSOption ]
-_render_all_crds: $[render(__traefik_crd, k) for k in _kinds]$</code></pre>
+_render_all_crds: '{[render(__traefik_crd, k) for k in _kinds]}'</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
@@ -955,15 +955,15 @@ urls:
 <div class="listingblock">
 <div class="title">render_file.yaml</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="yaml">_config: $render("_config.yaml")$
+<pre class="prettyprint highlight"><code data-lang="yaml">_config: '{render("_config.yaml")}'
 
 test_1:
   method: GET
-  url: $_._config.base$/$_._config.urls.a$
+  url: '{_._config.base}/{_._config.urls.a}'
 
 test_2:
   method: GET
-  url: $_._config.base$/$_._config.urls.b$</code></pre>
+  url: '{_._config.base}/{_._config.urls.b}'</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
@@ -985,7 +985,7 @@ test_2:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-08 22:00:48 +0100
+Last updated 2020-10-15 19:11:30 +0200
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
