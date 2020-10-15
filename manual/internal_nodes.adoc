@@ -2,25 +2,19 @@
 
 Internal nodes can be referenced from other nodes but they are not included in the output. They can be useful for storing data that needs to be referenced multiple times or for intermediate transformations.
 
-A node is treated as "silent" when it's key name starts wih an `(_)` underscore symbol.
+A node is treated as "silent" when its key name starts wih an `(_)` underscore symbol.
 
 [cols="1a,1a", options="header"]
-.Internal node example
+.Template node example
 |===
-|yamlfu|Rendered YAML|
-[source, bash]
-----
-_config:
-    os: Linux
-    arch: amd64
-
-System: $_config.os$
-URL: file-$_config.os.lower()$-$_config.arch$.tar.gz
-----
+|YAMLFu|YAML|
+[source, yaml]
+....
+include::../yamlfu/tests/files/internal_nodes.yaml[]
+....
 |
 [source, yaml]
-----
-System: Linux
-URL: file-linux-amd64.tar.gz
-----
+....
+include::../yamlfu/tests/files/internal_nodes_result.yaml[]
+....
 |===
