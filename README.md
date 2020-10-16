@@ -24,4 +24,3 @@ yamlfu input.yaml
 You can view examples of the templating capabilities at:
 https://yamlfu.github.io/
 
-# hobbykube
