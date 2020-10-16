@@ -1,4 +1,6 @@
 #!/bin/sh
+set -eu
+
 cd manual
 asciidoctor index.adoc
 rm -rf yamlfu.github.io

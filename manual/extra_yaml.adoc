@@ -1,21 +1,28 @@
-=== Extra Yaml
+=== Use External YAML for values
 
-Extra yaml is a command line option that allows to provide an yaml file that provides the values for a template.
+It is a common pattern to use a main template file that depends on additional values provided in an external file, yamlfu provides this capability with the `-x` command line option.
 
 e.g
 ```sh
-yamlfu main.yaml -x extra.yaml
+yamlfu main.yaml -x services/nginx.yaml
 ```
 
 [cols="1a,1a", options="header"]
-.Template node example
+.Extra YAML example
 |===
 |YAMLFu|YAML|
+.main.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/_extra_yaml.yaml[]
 ....
+.services/nginx.yaml
+[source, yaml]
+....
+include::../yamlfu/tests/files/services/nginx.yaml[]
+....
 |
+.Result
 [source, yaml]
 ....
 include::../yamlfu/tests/files/_extra_yaml_result.yaml[]
