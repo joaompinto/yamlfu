@@ -663,6 +663,7 @@ p.tableblock.header { color: #6d6e71; }
 <li><a href="#_template_nodes">Template Nodes</a></li>
 <li><a href="#_include_yaml_files">Include YAML files</a></li>
 <li><a href="#_use_external_yaml_for_values">Use External YAML for values</a></li>
+<li><a href="#_use_values_from_environment_vriables">Use values from environment vriables</a></li>
 </ul>
 </li>
 </ul>
@@ -1055,12 +1056,55 @@ spec:
 </tbody>
 </table>
 </div>
+<div class="sect2">
+<h3 id="_use_values_from_environment_vriables">Use values from environment vriables</h3>
+<div class="paragraph">
+<p>The command line option <code>-i</code> can be used to inject environment variables.</p>
+</div>
+<div class="paragraph">
+<p>e.g</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="sh">yamlfu test.yaml -e NAME</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Extra YAML example</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">YAMLFu</th>
+<th class="tableblock halign-left valign-top">YAML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">test.yaml</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">JOB NAME: '{NAME}'</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">export NAME="Boat" &amp;&amp; yamlfu test.yaml -e NAME</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">JOB NAME: Boat</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-17 13:11:42 UTC
+Last updated 2020-10-17 18:45:33 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

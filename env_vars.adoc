@@ -1,0 +1,25 @@
+=== Use values from environment vriables
+
+The command line option `-i` can be used to inject environment variables.
+
+e.g
+```sh
+yamlfu test.yaml -e NAME
+```
+
+[cols="1a,1a", options="header"]
+.Extra YAML example
+|===
+|YAMLFu|YAML|
+.test.yaml
+[source, yaml]
+....
+JOB NAME: '{NAME}'
+....
+|
+.export NAME="Boat" && yamlfu test.yaml -e NAME
+[source, yaml]
+....
+JOB NAME: Boat
+....
+|===
