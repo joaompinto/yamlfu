@@ -22,13 +22,13 @@ Constant expressions can be used to preserve calculation formulas in the source 
 .Constant expression examples
 |===
 |YAMLFu|YAML|
-.expressions.yaml
+.input.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/expressions.yaml[]
 ....
 |
-yamlfu expressions.yaml
+.yamlfu input.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/expressions_result.yaml[]
@@ -43,11 +43,13 @@ Sibling references can be used to facilitate string composition and transformati
 .Sibling reference examples
 |===
 |YAMLFu|YAML|
+.input.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/sibling_reference.yaml[]
 ....
 |
+.yamlfu input.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/sibling_reference_result.yaml[]
