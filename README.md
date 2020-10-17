@@ -2,6 +2,12 @@
 
 YAML Fu is a YAML templating tool
 
+![PyPI - License](https://img.shields.io/pypi/l/yamlfu)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yamlfu)
+![PyPI](https://img.shields.io/pypi/v/yamlfu)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/yamlfu)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/joaompinto/yamlfu/Test)
+
 ## About
 
 This package provides a command line utility and a Python library that generate YAML content fom processing yamlfu documents.
