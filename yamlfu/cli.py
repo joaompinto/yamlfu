@@ -9,6 +9,13 @@ from .pretty import pretty_print_yaml
 def parse_cmd_line():
     parser = OptionParser()
     parser.add_option(
+        "-e",
+        "--environ-vars",
+        dest="env_vars",
+        help="import values from environent variables",
+        default=None,
+    )
+    parser.add_option(
         "-x",
         "--extra-file",
         dest="extra_file",
@@ -25,7 +32,7 @@ def parse_cmd_line():
 def main():
     options, args = parse_cmd_line()
     filename = Path(args[0])
-    loader = Loader(filename, extra_file=options.extra_file)
+    loader = Loader(filename, extra_file=options.extra_file, env_vars=options.env_vars)
     result = loader.resolve()
     for result_item in result:
         if len(result) > 1:

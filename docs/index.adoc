@@ -62,3 +62,5 @@ include::template_nodes.adoc[]
 include::render_files.adoc[]
 
 include::extra_yaml.adoc[]
+
+include::env_vars.adoc[]

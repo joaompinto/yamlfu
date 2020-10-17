@@ -1,12 +1,13 @@
 import yaml
+import os
+import sys
 from dinterpol import Template
-from sys import stderr
 from pathlib import Path
 from .functions import provide_yamlfu_functions
 
 
 class Loader:
-    def __init__(self, input_data, doc_path=None, extra_file=None):
+    def __init__(self, input_data, doc_path=None, extra_file=None, env_vars=None):
         self.unresolved_strings = {}
         self.multi_doc = []
         self.doc_path = doc_path
@@ -19,10 +20,23 @@ class Loader:
                 input_data = yaml_file.read()
         self.origin_yaml = yaml.safe_load(input_data)
         self.extra_yaml = {}
+        self.env_vars = env_vars
         if extra_file:
             with open(extra_file) as yaml_file:
                 input_data = yaml_file.read()
-            self.extra_yaml =  yaml.safe_load(input_data)
+            self.extra_yaml = yaml.safe_load(input_data)
+
+    def _scan_for_strings_on_dict(self, yaml_data, yaml_path, yaml_parent):
+        # Recursively check dict
+        for key, value in yaml_data.items():
+            sub_yaml_path = yaml_path + [key]
+            self._scan_for_strings(value, sub_yaml_path, yaml_data)
+
+    def _scan_for_strings_on_list(self, yaml_data, yaml_path, yaml_parent):
+        # Recursively check list
+        for key, value in enumerate(yaml_data):
+            sub_yaml_path = yaml_path + [str(key)]
+            self._scan_for_strings(value, sub_yaml_path, yaml_data)
 
     def _scan_for_strings(self, yaml_data, yaml_path, yaml_parent):
         """ scan yaml_data for unresolved dynamic string values """
@@ -31,6 +45,7 @@ class Loader:
             # if is a template node it will not be rendered now
             if key_name.startswith("__"):
                 return
+
         if isinstance(yaml_data, str):
             template = Template(yaml_data)
             try:
@@ -43,40 +58,49 @@ class Loader:
 
         # Recursively check dict
         if isinstance(yaml_data, dict):
-            for key, value in yaml_data.items():
-                sub_yaml_path = yaml_path + [key]
-                self._scan_for_strings(value, sub_yaml_path, yaml_data)
+            self._scan_for_strings_on_dict(yaml_data, yaml_path, yaml_parent)
 
         # Recursively check dict
         if isinstance(yaml_data, list):
-            for key, value in enumerate(yaml_data):
-                sub_yaml_path = yaml_path + [str(key)]
-                self._scan_for_strings(value, sub_yaml_path, yaml_data)
-        return
+            self._scan_for_strings_on_list(yaml_data, yaml_path, yaml_parent)
 
     def _resolve_str(self):
         """ resolving a single string input """
         template = Template(self.origin_yaml)
         return template.render({})
 
+    def load_env_symbols(self, available_symbols):
+        env_symbols = {}
+        if self.env_vars:
+            for env_name in self.env_vars.split(","):
+                try:
+                    env_value = os.environ[env_name]
+                except KeyError:
+                    raise Exception(f"Environment variable {env_name} is not defined")
+                env_symbols[env_name] = env_value
+            available_symbols.update(env_symbols)
+
     def generate_symbols(self, base_symbols, yaml_path):
 
         if base_symbols:
             return base_symbols
+        available_symbols = {}
 
         parent_item, yaml_key = self._element_at_path(yaml_path)
 
         # Generate top item symbols to be associated with "_"
+        # Only reference resolved symbols
         top_item = self.origin_yaml
         top_symbols_map = {}
 
-        # Only reference resolved symbols
         top_symbols = [k for k in top_item if k not in self.unresolved_strings]
         for symbol in top_symbols:
             top_symbols_map[symbol] = top_item[symbol]
 
         available_symbols = {"_": top_symbols_map}
         available_symbols.update(self.extra_yaml)
+
+        self.load_env_symbols(available_symbols)
 
         if isinstance(parent_item, dict):
             for slibing_key in parent_item.keys():
@@ -91,8 +115,32 @@ class Loader:
         provide_yamlfu_functions(available_symbols, self.doc_path)
         return available_symbols
 
+    def _merge_internal(self, yaml_key, parent_item, rendered_value):
+        """
+        docstring
+        """
+        # Merge rendered content when using an internal key name
+        if yaml_key[0] == "_" and isinstance(parent_item, dict):
+            if (
+                isinstance(rendered_value, dict)
+                and "_internal_render" in rendered_value
+            ):
+                del rendered_value["_internal_render"]
+                if parent_item == self.origin_yaml:
+                    self.origin_yaml = {**self.origin_yaml, **rendered_value}
+            if (
+                isinstance(rendered_value, list)
+                and isinstance(rendered_value[0], dict)
+                and "_internal_render" in rendered_value[0]
+            ):
+                for item in rendered_value:
+                    del item["_internal_render"]
+                    self.multi_doc.append(item)
+
     def resolve(self, base_symbols={}):
         """ resolve $dynamic elements$ in strings """
+
+        # A single string was provided, just resolve it
         if isinstance(self.origin_yaml, str):
             return self._resolve_str()
 
@@ -116,26 +164,7 @@ class Loader:
                     #  print("SYMBOLS", available_symbols)
                     pass
                 else:
-                    # Merge rendered content when  using an internal key name
-                    if yaml_key[0] == "_" and isinstance(parent_item, dict):
-                        if (
-                            isinstance(rendered_value, dict)
-                            and "_internal_render" in rendered_value
-                        ):
-                            del rendered_value["_internal_render"]
-                            if parent_item == self.origin_yaml:
-                                self.origin_yaml = {
-                                    **self.origin_yaml,
-                                    **rendered_value,
-                                }
-                        if (
-                            isinstance(rendered_value, list)
-                            and isinstance(rendered_value[0], dict)
-                            and "_internal_render" in rendered_value[0]
-                        ):
-                            for item in rendered_value:
-                                del item["_internal_render"]
-                                self.multi_doc.append(item)
+                    self._merge_internal(yaml_key, parent_item, rendered_value)
 
                     # Set the value at the path
                     # print("RESOLVED: ", parent_path + "." + yaml_key, yaml_value)
@@ -165,10 +194,10 @@ class Loader:
     def _check_unresolved_strings(self):
         # Finished resolution with unresolved values
         if self.unresolved_strings:
-            print("Unable to resolve the following items:", file=stderr)
+            print("Unable to resolve the following items:", file=sys.stderr)
             for path, value in self.unresolved_strings.items():
                 string_path = path.replace("\n", ".")
-                print(f"{string_path} : {value.template}", file=stderr)
+                print(f"{string_path} : {value.template}", file=sys.stderr)
             exit(2)
 
     def _delete_internal(self, yaml_data):
