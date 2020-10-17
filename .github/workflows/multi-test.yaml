@@ -1,5 +1,6 @@
-name: Test
+name: Multi platform / version testing
 on: push
+
 
 jobs:
   build:
