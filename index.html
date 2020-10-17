@@ -718,13 +718,17 @@ yamlfu document rendering is equivalent to a python script execution. You should
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">expressions.yaml</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="yaml">Arithmetic: '{2 + 1}'
 Strings: '{"abc".upper()}'
 List: '{[x.upper() for x in ["a", "b"]]}'</code></pre>
 </div>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yamlfu expressions.yaml</p>
+</div>
+<div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="yaml">Arithmetic: 3
 Strings: ABC
@@ -1031,7 +1035,7 @@ PORT: 80</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
-<div class="title">Result</div>
+<div class="title">yamlfu main.yaml -x ervices/nginx.yaml</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="yaml">apiVersion: v1
 kind: Service
@@ -1056,7 +1060,7 @@ spec:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-17 12:46:08 UTC
+Last updated 2020-10-17 13:06:57 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

@@ -22,11 +22,13 @@ Constant expressions can be used to preserve calculation formulas in the source 
 .Constant expression examples
 |===
 |YAMLFu|YAML|
+.expressions.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/expressions.yaml[]
 ....
 |
+yamlfu expressions.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/expressions_result.yaml[]

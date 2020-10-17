@@ -22,7 +22,7 @@ include::../yamlfu/tests/files/_extra_yaml.yaml[]
 include::../yamlfu/tests/files/services/nginx.yaml[]
 ....
 |
-.Result
+.yamlfu main.yaml -x ervices/nginx.yaml
 [source, yaml]
 ....
 include::../yamlfu/tests/files/_extra_yaml_result.yaml[]
