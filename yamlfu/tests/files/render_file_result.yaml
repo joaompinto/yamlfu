@@ -1,6 +1,0 @@
-test_1:
-  method: GET
-  url: http://localhost:9080/insert
-test_2:
-  method: GET
-  url: http://localhost:9080/update

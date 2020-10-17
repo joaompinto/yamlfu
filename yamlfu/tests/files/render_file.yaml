@@ -1,9 +1,0 @@
-_config: '{render("_config.yaml")}'
-
-test_1:
-  method: GET
-  url: '{_._config.base}/{_._config.urls.a}'
-
-test_2:
-  method: GET
-  url: '{_._config.base}/{_._config.urls.b}'
