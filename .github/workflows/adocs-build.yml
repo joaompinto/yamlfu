@@ -1,4 +1,4 @@
-name: build adocs
+name: Build and publish docs
 
 on:
   push:
