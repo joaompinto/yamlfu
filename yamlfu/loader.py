@@ -206,11 +206,14 @@ class Loader:
             [self._delete_internal(i) for i in yaml_data]
         if isinstance(yaml_data, dict):
             delete_keys = []
+            is_raw = "__raw__" in yaml_data
             for key, value in yaml_data.items():
-                if key[0] == "_":
+                if key[0] == "_" and not is_raw:
                     delete_keys.append(key)
                 else:
                     self._delete_internal(value)
+            if is_raw:
+                delete_keys.append("__raw__")
             for keyname in delete_keys:
                 del yaml_data[keyname]
 

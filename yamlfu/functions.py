@@ -1,9 +1,22 @@
 from copy import deepcopy
 from functools import partial
+import yaml
 
 
 def provide_yamlfu_functions(symbols, doc_path):
     symbols["render"] = partial(render, doc_path)
+    symbols["raw_render"] = partial(raw_render, doc_path)
+
+
+def raw_render(doc_path, template, *args, **kwargs):
+    load_filename = doc_path.joinpath(template)
+    with open(load_filename) as yaml_file:
+        input_data = yaml_file.read()
+    result = yaml.safe_load(input_data)
+    if isinstance(result, dict):
+        print("SET RAW")
+        result["__raw__"] = True
+    return result
 
 
 def render(doc_path, template, *args, **kwargs):

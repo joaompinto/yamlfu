@@ -1,0 +1,3 @@
+_config: '{raw_render("_config.yaml")}'
+
+url: '{_config}'

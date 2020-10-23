@@ -1,0 +1,6 @@
+url:
+  _ok: This is a plain value
+  base: http://localhost:9080
+  urls:
+    a: insert
+    b: update
